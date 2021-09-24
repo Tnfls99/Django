@@ -111,7 +111,8 @@ env.bak/
 venv.bak/
 
 # Pychram
-.idea
+.idea/
+migrations/
 
 # Spyder project settings
 .spyderproject
