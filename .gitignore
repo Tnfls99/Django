@@ -113,6 +113,7 @@ venv.bak/
 # Pychram
 .idea/
 migrations/
+_media/
 
 bootstrap/
 
