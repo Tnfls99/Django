@@ -1,9 +1,12 @@
 from django.db import models
+import os
 
 # Create your models here.
 
 class Post(models.Model):
+    ## 필드선언하는곳
     title = models.CharField(max_length=30)
+    hook_text = models.CharField(max_length=100, blank=True)
     content = models.TextField()
 
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d', blank=True)
@@ -18,3 +21,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
+
+    def get_file_name(self): ## 파일 이름을 가져오는 것
+        return os.path.basename(self.file_upload.name)
+
+    def get_file_ext(self): ## 파일 학장자 가져오는 것
+        return self.get_file_name().split('.')[-1] ## -1로 가장 마지막 문자인 확장자를 가져옴
