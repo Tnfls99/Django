@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+ ## 앱 새로 만들면 settings.py 에 추가해야함 !!
 urlpatterns = [
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),

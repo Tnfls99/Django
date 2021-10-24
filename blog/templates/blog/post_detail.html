@@ -28,7 +28,7 @@
                         <section class="mb-5">
                             <p> {{ post.content }} </p>
                             {% if post.file_upload %}
-                            <a href="{{post.file_upload.url}}" role="button" class="btn btn-outline-dark" download>
+                            <a href="{{ post.file_upload.url }}" role="button" class="btn btn-outline-dark" download>
                                 Download :
                                 {% if post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
                                     <i class="fas fa-file-excel"></i>

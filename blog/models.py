@@ -3,7 +3,7 @@ import os
 
 # Create your models here.
 
-class Post(models.Model):
+class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 말기
     ## 필드선언하는곳
     title = models.CharField(max_length=30)
     hook_text = models.CharField(max_length=100, blank=True)

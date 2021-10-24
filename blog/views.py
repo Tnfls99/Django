@@ -3,6 +3,7 @@ from .models import Post
 from django.views.generic import ListView, DetailView
 # Create your views here.
 
+## CBV
 class PostList(ListView):
     model = Post
     ordering = '-pk'
@@ -11,8 +12,9 @@ class PostList(ListView):
 
 class PostDetail(DetailView):
     model = Post
-# post_detail.html
+# post_detail.html // post = model name
 
+## FBV
 #def index(request):
  #   posts = Post.objects.all().order_by('-pk')
 #
@@ -30,6 +32,6 @@ class PostDetail(DetailView):
   #      request,
    #     'blog/post_detail.html',
   #      {
-   #         'post': post,
+   #         'post': post, 콤마 잊지 말고 작성하기 !
    #     }
    # )
