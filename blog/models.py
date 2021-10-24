@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import os
 
 # Create your models here.
@@ -15,9 +16,10 @@ class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 
     updated_at = models.DateTimeField(auto_now=True)
 
     #author
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self): # post로 만들어진 오브젝트 하나하나를 의미
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title} :: {self.author}'
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
