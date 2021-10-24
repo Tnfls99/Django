@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 import os
 
 # Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
 
 class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 말기
     ## 필드선언하는곳
@@ -17,6 +26,7 @@ class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 
 
     #author
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self): # post로 만들어진 오브젝트 하나하나를 의미
         return f'[{self.pk}]{self.title} :: {self.author}'
