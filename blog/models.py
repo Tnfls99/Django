@@ -10,6 +10,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return f'/blog/category/{self.slug}'
+
     class Meta:
         verbose_name_plural = 'Categories'
 
@@ -30,6 +33,7 @@ class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 
 
     def __str__(self): # post로 만들어진 오브젝트 하나하나를 의미
         return f'[{self.pk}]{self.title} :: {self.author}'
+
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'

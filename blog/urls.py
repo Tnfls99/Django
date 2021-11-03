@@ -8,6 +8,7 @@ urlpatterns = [
     #path('', views.index), # 서버 IP/blog
 
     ## CBV
+    path('category/<str:slug>', views.category_page),
     path('<int:pk>/', views.PostDetail.as_view()),
     path('', views.PostList.as_view()),
 ]
