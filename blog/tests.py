@@ -8,6 +8,8 @@ class TestView(TestCase):
     def setUp(self):
         self.client = Client()
         self.user_james = User.objects.create_user(username='James', password='somepassword')
+        self.user_james.is_staff = True # James에게 스태프 권한 부여
+        self.user_james.save()
         self.user_trump = User.objects.create_user(username='Trump', password='somepassword')
 
         self.category_programming = Category.objects.create(name='programming', slug='programming')
@@ -99,12 +101,18 @@ class TestView(TestCase):
 
     def test_create_post(self):
         # 포스트 목록 페이지를 가져온다
+        # 일반 사용자의 경우 폼이 정상적으로 열리지 않는가
         response = self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
         self.client.login(username='Trump', password='somepassword')
         response = self.client.get('/blog/create_post/')
         # 정상적으로 페이지가 로드되는가
+        self.assertNotEqual(response.status_code, 200)
+        # 스태프인 경우에만 정상적으로 폼이 열리는가
+        self.client.login(username='James', password='somepassword')
+        response = self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code, 200)
+
         # 페이지 타이틀이 'Blog' 인가
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertEqual(soup.title.text, 'Create Post - Blog')
@@ -119,7 +127,7 @@ class TestView(TestCase):
                          })
         last_post = Post.objects.last()
         self.assertEqual(last_post.title, "Post form 만들기")
-        self.assertEqual(last_post.author.username, 'Trump')
+        self.assertEqual(last_post.author.username, 'James')
 
     def test_post_list(self):
         self.assertEqual(Post.objects.count(), 3)
