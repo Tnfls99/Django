@@ -29,12 +29,12 @@
                             {% if post.head_image %}
                                 <img class="img-fluid rounded" src="{{ post.head_image.url }}" alt="..." />
                             {% else %}
-                                 <img class="img-fluid rounded" src="https://picsum.photos/seed/{{p.id}}/800/200"alt="random image"/>
+                                 <img class="img-fluid rounded" src="https://picsum.photos/seed/{{post.id}}/900/200"alt="random image"/>
                             {% endif %}
                         </figure>
                         <!-- Post content-->
                         <section class="mb-5">
-                            <p> {{ post.content }} </p>
+                            <p> {{ post.get_content_markdown | safe }} </p>
                             {% if post.tags.exists %}
                             <i class="fas fa-tags"></i>
                                 {% for tag in post.tags.all %}
