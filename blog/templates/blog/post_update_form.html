@@ -7,6 +7,11 @@
         {% csrf_token %}
         <table>
             {{form}}
+            <!-- tag 입력받기 -->
+            <tr>
+                <th><label for="id_tags_str">Tags:</label></th>
+                <td><input type="text" name="tags_str" maxlength="30" required id="id_tags_str" value="{{ tag_str_default }}"></td>
+            </tr>
         </table>
         <button type="submit" class="btn btn-primary float-right">Submit</button>
     </form>
