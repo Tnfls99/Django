@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 # Create your views here.
 
 def new_comment(request, pk):
@@ -109,6 +110,23 @@ class PostList(ListView):
 
 #    template_name = 'blog/post_list.html'
 # post_list.html // post_list= model name
+
+class PostSearch(PostList): ## PostList 다음에 선언이 되어 있어야 parameter인 PostList의 존재를 알 수 있다.
+    paginate_by = None
+
+    def get_queryset(self):
+        q = self.kwargs['q'] # 검색어 가지고 옴
+        post_list = Post.objects.filter(
+            Q(title__contains=q) | Q(tags__name__contains=q) # 데이터베이스에서 쿼리를 통해 데이터를 찾아옴
+        ).distinct()
+        return post_list
+
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search : {q}({self.get_queryset().count()})'
+
+        return context
 
 class PostDetail(DetailView):
     model = Post
