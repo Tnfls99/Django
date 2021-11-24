@@ -99,6 +99,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView): # 모델명_form 템플릿명�
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostList, self).get_context_data()
