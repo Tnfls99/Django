@@ -58,6 +58,12 @@ class Post(models.Model): ## Model 업그레이드 할 때마다 migrate 잊지 
     def get_content_markdown(self):
         return markdown(self.content)
 
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists():
+            return self.author.socialaccount_set.first().get_avatar_url()
+        else:
+            return 'https://doitdjango.com/avatar/id/426/215f50b97258a737/svg/{self.author.email}/'
+
 class Comment(models.Model): #블로그 포스트가 존재해야만 댓글을 달 수 있다. 댓글과 포스트는 다대일 관계
     post = models.ForeignKey(Post, on_delete=models.CASCADE) # 포스트가 삭제되면 댓글도 모두 삭제
     author = models.ForeignKey(User, on_delete=models.CASCADE) # 한명의 유저가 여러개의 댓글을 달 수 있기 때문에 다대일 관계
@@ -70,8 +76,3 @@ class Comment(models.Model): #블로그 포스트가 존재해야만 댓글을 �
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
 
-    def get_avatar_url(self):
-        if self.author.socialaccount_set.exists():
-            return self.author.socialaccount_set.first().get_avatar_url()
-        else:
-            return 'https://doitdjango.com/avatar/id/426/215f50b97258a737/svg/{self.author.email}/'
